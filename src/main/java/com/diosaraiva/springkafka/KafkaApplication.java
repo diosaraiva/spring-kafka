@@ -23,27 +23,26 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 public class KafkaApplication 
 {
 	public static void main(String[] args) throws Exception {
-
 		ConfigurableApplicationContext context = SpringApplication.run(KafkaApplication.class, args);
 
 		MessageProducer producer = context.getBean(MessageProducer.class);
 		MessageListener listener = context.getBean(MessageListener.class);
 		/*
-		 * Sending a Hello World message to topic 'mytopic'. 
-		 * Must be received by both listeners with group foo
-		 * and bar with containerFactory fooKafkaListenerContainerFactory
-		 * and barKafkaListenerContainerFactory respectively.
-		 * It will also be received by the listener with
-		 * headersKafkaListenerContainerFactory as container factory.
+		 Sending a Hello World message to topic 'mytopic'. 
+		 Must be received by both listeners with group foo
+		 and bar with containerFactory fooKafkaListenerContainerFactory
+		 and barKafkaListenerContainerFactory respectively.
+		 It will also be received by the listener with
+		 headersKafkaListenerContainerFactory as container factory.
 		 */
 		producer.sendMessage("Hello, World!");
 		listener.latch.await(10, TimeUnit.SECONDS);
 
 		/*
-		 * Sending message to a topic with 5 partitions,
-		 * each message to a different partition. But as per
-		 * listener configuration, only the messages from
-		 * partition 0 and 3 will be consumed.
+		 Sending message to a topic with 5 partitions,
+		 each message to a different partition. But as per
+		 listener configuration, only the messages from
+		 partition 0 and 3 will be consumed.
 		 */
 		for (int i = 0; i < 5; i++) {
 			producer.sendMessageToPartition("Hello To Partitioned Topic!", i);
@@ -51,18 +50,18 @@ public class KafkaApplication
 		listener.partitionLatch.await(10, TimeUnit.SECONDS);
 
 		/*
-		 * Sending message to 'filtered' topic. As per listener
-		 * configuration,  all messages with char sequence
-		 * 'World' will be discarded.
+		 Sending message to 'filtered' topic. As per listener
+		 configuration,  all messages with char sequence
+		 'World' will be discarded.
 		 */
 		producer.sendMessageToFiltered("Hello MyTopic!");
 		producer.sendMessageToFiltered("Hello World!");
 		listener.filterLatch.await(10, TimeUnit.SECONDS);
 
 		/*
-		 * Sending message to 'greeting' topic. This will send
-		 * and received a java object with the help of
-		 * greetingKafkaListenerContainerFactory.
+		 Sending message to 'greeting' topic. This will send
+		 and received a java object with the help of
+		 greetingKafkaListenerContainerFactory.
 		 */
 		producer.sendGreetingMessage(new Greeting("Greetings", "World!"));
 		listener.greetingLatch.await(10, TimeUnit.SECONDS);
@@ -81,7 +80,6 @@ public class KafkaApplication
 	}
 
 	public static class MessageProducer {
-
 		@Autowired
 		private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -133,13 +131,9 @@ public class KafkaApplication
 	}
 
 	public static class MessageListener {
-
 		private CountDownLatch latch = new CountDownLatch(3);
-
 		private CountDownLatch partitionLatch = new CountDownLatch(2);
-
 		private CountDownLatch filterLatch = new CountDownLatch(2);
-
 		private CountDownLatch greetingLatch = new CountDownLatch(1);
 
 		@KafkaListener(topics = "${message.topic.name}", groupId = "foo", containerFactory = "fooKafkaListenerContainerFactory")

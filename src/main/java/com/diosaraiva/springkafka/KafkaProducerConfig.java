@@ -15,7 +15,6 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 @Configuration
 public class KafkaProducerConfig {
-
 	@Value(value = "${kafka.bootstrapAddress}")
 	private String bootstrapAddress;
 
@@ -48,5 +47,4 @@ public class KafkaProducerConfig {
 	public KafkaTemplate<String, Greeting> greetingKafkaTemplate() {
 		return new KafkaTemplate<>(greetingProducerFactory());
 	}
-
 }

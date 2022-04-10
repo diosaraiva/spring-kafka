@@ -15,9 +15,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 
 @SpringBootApplication
 public class KafkaApplicationLongMessage {
-
 	public static void main(String[] args) throws Exception {
-
 		ConfigurableApplicationContext context = SpringApplication.run(KafkaApplicationLongMessage.class, args);
 
 		LongMessageProducer producer = context.getBean(LongMessageProducer.class);
@@ -49,7 +47,6 @@ public class KafkaApplicationLongMessage {
 	}
 
 	public static class LongMessageProducer {
-
 		@Autowired
 		private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -60,16 +57,12 @@ public class KafkaApplicationLongMessage {
 			kafkaTemplate.send(topicName, message);
 			System.out.println("Long message Sent");
 		}
-
 	}
 
 	public static class LongMessageListener {
-
 		@KafkaListener(topics = "${long.message.topic.name}", groupId = "longMessage", containerFactory = "longMessageKafkaListenerContainerFactory")
 		public void listenGroupLongMessage(String message) {
 			System.out.println("Received Message in group 'longMessage'");
 		}
-
 	}
-
 }

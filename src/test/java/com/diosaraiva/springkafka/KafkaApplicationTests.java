@@ -5,9 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = KafkaApplication.class)
 class LandioCoreApplicationTests {
-
 	@Test
 	void contextLoads() {
 	}
-	
 }

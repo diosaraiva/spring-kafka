@@ -17,7 +17,6 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 @EnableKafka
 @Configuration
 public class KafkaConsumerConfig {
-
 	@Value(value = "${kafka.bootstrapAddress}")
 	private String bootstrapAddress;
 
@@ -84,5 +83,4 @@ public class KafkaConsumerConfig {
 		factory.setConsumerFactory(greetingConsumerFactory());
 		return factory;
 	}
-
 }
