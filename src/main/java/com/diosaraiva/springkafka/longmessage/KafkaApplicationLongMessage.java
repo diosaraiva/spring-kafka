@@ -1,17 +1,13 @@
-package com.diosaraiva.springkafka;
+package com.diosaraiva.springkafka.longmessage;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
 
 @SpringBootApplication
 public class KafkaApplicationLongMessage {
@@ -44,25 +40,5 @@ public class KafkaApplicationLongMessage {
 	@Bean
 	public LongMessageListener longMessageListener() {
 		return new LongMessageListener();
-	}
-
-	public static class LongMessageProducer {
-		@Autowired
-		private KafkaTemplate<String, String> kafkaTemplate;
-
-		@Value(value = "${long.message.topic.name}")
-		private String topicName;
-
-		public void sendMessage(String message) {
-			kafkaTemplate.send(topicName, message);
-			System.out.println("Long message Sent");
-		}
-	}
-
-	public static class LongMessageListener {
-		@KafkaListener(topics = "${long.message.topic.name}", groupId = "longMessage", containerFactory = "longMessageKafkaListenerContainerFactory")
-		public void listenGroupLongMessage(String message) {
-			System.out.println("Received Message in group 'longMessage'");
-		}
 	}
 }

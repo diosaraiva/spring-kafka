@@ -1,4 +1,4 @@
-package com.diosaraiva.springkafka;
+package com.diosaraiva.springkafka.kafka;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +34,7 @@ public class KafkaTopicConfig {
 	public KafkaAdmin kafkaAdmin() {
 		Map<String, Object> configs = new HashMap<>();
 		configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+		
 		return new KafkaAdmin(configs);
 	}
 
@@ -63,6 +64,7 @@ public class KafkaTopicConfig {
 		Map<String, String> configs = new HashMap<>();
 		configs.put("max.message.bytes", "20971520");
 		newTopic.configs(configs);
+		
 		return newTopic;
 	}
 }
